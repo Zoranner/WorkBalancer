@@ -7,10 +7,10 @@
         xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        ShowTitle="True"
-        Title="{StaticResource WindowTitle}" 
+        ShowTitle="False"
+        Title="{StaticResource WindowTitle}"
         Height="850" 
-        Width="1384">
+        Width="1384" ResizeMode="NoResize" ShowInTaskbar="False" Icon="Resources/Pictures/cherry-blossom.ico" WindowState="Maximized">
     <hc:SimplePanel>
         <hc:ImageBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <hc:FlipClock HorizontalAlignment="Center" VerticalAlignment="Center"/>
