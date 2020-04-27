@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<images>
+  <image>
+    <startdate>20200426</startdate>
+    <fullstartdate>202004260900</fullstartdate>
+    <enddate>20200427</enddate>
+    <url>/th?id=OHR.SouthAmericanTapir_ZH-CN6151058361_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp</url>
+    <urlBase>/th?id=OHR.SouthAmericanTapir_ZH-CN6151058361</urlBase>
+    <copyright>一只南美貘幼崽小跑着穿过草地 (? Nick Fox/Shutterstock)</copyright>
+    <copyrightlink>https://www.bing.com/search?q=%E5%8D%97%E7%BE%8E%E8%B2%98&amp;form=hpcapt&amp;mkt=zh-cn</copyrightlink>
+    <headline></headline>
+    <drk>1</drk>
+    <top>1</top>
+    <bot>1</bot>
+    <hotspots></hotspots>
+  </image>
+  <tooltips>
+    <loadMessage>
+      <message>正在加载...</message>
+    </loadMessage>
+    <previousImage>
+      <text>上一个图像</text>
+    </previousImage>
+    <nextImage>
+      <text>下一个图像</text>
+    </nextImage>
+    <play>
+      <text>播放视频</text>
+    </play>
+    <pause>
+      <text>暂停视频</text>
+    </pause>
+  </tooltips>
+</images>

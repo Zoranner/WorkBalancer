@@ -1,27 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Window = System.Windows.Window;
 
-namespace BalanceWork
+namespace WorkBalancer
 {
     /// <summary>
     /// StrongNotice.xaml 的交互逻辑
     /// </summary>
     public partial class StrongNotice
     {
-        public StrongNotice(string info = "BalanceWork")
+        private int _DelayTimes;
+
+        public StrongNotice()
         {
             InitializeComponent();
-            textBlock.Text = info;
+            Initialized += StrongNotice_Initialized;
+        }
+
+        private void StrongNotice_Initialized(object sender, System.EventArgs e)
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                confirmButton.Progress = 0.1 * (i + 1);
+                Thread.Sleep(100);
+            }
+        }
+
+        private void StrongNotice_Loaded(object sender, RoutedEventArgs e)
+        {
+            textBlock.Text = _DelayTimes.ToString();
+
+            if(_DelayTimes == 0)
+            {
+                // 第一次弹出 推迟1分钟
+                delayButton.Content = Application.Current.Resources["DelayOneMinute"];
+            }
+            else if(_DelayTimes == 1)
+            {
+                // 第二次弹出 推迟3分钟
+                delayButton.Content = Application.Current.Resources["DelayThreeMinute"];
+            }
+            else
+            {
+                // 多于三次弹出 推迟5分钟
+                delayButton.Content = Application.Current.Resources["DelayFiveMinute"];
+            }
+        }
+
+        private void DelayButton_Click(object sender, RoutedEventArgs e)
+        {
+            _DelayTimes++;
+            Close();
+        }
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            _DelayTimes = 0;
+            Close();
+        }
+
+        private void Close()
+        {
+            if (!(this is DependencyObject dependencyObject))
+            {
+                return;
+            }
+
+            if (Window.GetWindow(dependencyObject) is Window window)
+            {
+                window.Close();
+            }
         }
     }
 }
