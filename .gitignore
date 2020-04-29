@@ -1,4 +1,7 @@
+/.history
 /.vs
 /packages
+/SuperEvents/bin
+/SuperEvents/obj
 /WorkBalancer/bin
 /WorkBalancer/obj
