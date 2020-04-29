@@ -1,14 +1,8 @@
 ﻿using HandyControl.Controls;
-using HandyControl.Data;
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.Timers;
 using System.Windows;
-using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Window = System.Windows.Window;
 
 namespace WorkBalancer
@@ -18,8 +12,11 @@ namespace WorkBalancer
     /// </summary>
     public partial class MainWindow
     {
+        private Timer _RestTimer;
+        private Timer _WorkTimer;
         private StrongNotice _StrongNotice;
-        private const string BING_XML_PATH = "http://cn.bing.com/HPImageArchive.aspx?idx=0&n=1";
+        private BingWallpaper _BingWallpaper;
+        public delegate void TimerDispatcherDelegate(bool state);
 
         public MainWindow()
         {
@@ -28,73 +25,80 @@ namespace WorkBalancer
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            _RestTimer = new Timer(3000);
+            _WorkTimer = new Timer(5000);
             _StrongNotice = new StrongNotice();
+            _BingWallpaper = new BingWallpaper();
+            _RestTimer.Elapsed += new ElapsedEventHandler(RestTimer_Elapsed);
+            _WorkTimer.Elapsed += new ElapsedEventHandler(WorkTimer_Elapsed);
+            _WorkTimer.Enabled = true;
+            WindowState = WindowState.Minimized;
         }
 
         private void PopupButton_Clicked(object sender, RoutedEventArgs e)
         {
-            Notification.Show(_StrongNotice, ShowAnimation.HorizontalMove, true);
+            Growl.Error("ErrorMessage", "MainMessage");
+            //Notification.Show(_StrongNotice, ShowAnimation.HorizontalMove, true);
         }
 
-        private void MainWindow_Activated(object sender, EventArgs e)
+        private void MainWindow_StateChanged(object sender, EventArgs e)
+        {
+            //if(WindowState == WindowState.Minimized)
+            //{
+            //    return;
+            //}
+
+            //TryLoadImage();
+        }
+
+        private void WorkTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, new TimerDispatcherDelegate(BalanceSwitch), true);
+        }
+
+        private void RestTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, new TimerDispatcherDelegate(BalanceSwitch), false);
+        }
+
+        private void BalanceSwitch(bool state)
+        {
+            _RestTimer.Enabled = state;
+            _WorkTimer.Enabled = !state;
+            if (state)
+            {
+                Show();
+                WindowState = WindowState.Maximized;
+                TryLoadImage();
+            }
+            else
+            {
+                Hide();
+                WindowState = WindowState.Minimized;
+            }
+        }
+
+        private void TryLoadImage()
         {
             try
             {
-                var cachesPath = $"{AppDomain.CurrentDomain.BaseDirectory}\\caches";
-
-                if (!Directory.Exists(cachesPath))
-                {
-                    Directory.CreateDirectory(cachesPath);
-                }
-
-                var todayImagePath = $"{cachesPath}\\bing-{DateTime.Now:yyyyMMdd}.jpg";
-                Console.WriteLine(todayImagePath);
-
-                if (!File.Exists(todayImagePath))
-                {
-                    WebRequest webRequest = WebRequest.Create(GetBingUrl());
-                    WebResponse webResponse = webRequest.GetResponse();
-                    using (Stream stream = webResponse.GetResponseStream())
-                    {
-                        var wallpaper = (Bitmap)Image.FromStream(stream);
-                        wallpaper.Save(todayImagePath, ImageFormat.Jpeg);
-                    }
-                }
-
-                imageBlock.Source = new BitmapImage(new Uri(todayImagePath, UriKind.Absolute));
+                imageBlock.Source = _BingWallpaper.LoadImage();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 Console.WriteLine(exception.Message);
+                Growl.Error(exception.Message, "MainMessage");
             }
         }
 
-        private string GetBingUrl()
+        private void BingWallpaper_LoadStarted()
         {
-            var xmlContent = CreateGetHttpResponse(BING_XML_PATH);
-            var regex = new Regex("<Url>(?<ImageUrl>.*?)</Url>", RegexOptions.IgnoreCase);
-            var collection = regex.Matches(xmlContent);
-            string imageUrl = ("http://www.bing.com" + collection[0].Groups["ImageUrl"].Value);
-            return imageUrl.Replace("&amp;", "&");
+
         }
 
-        public string CreateGetHttpResponse(string url, int Timeout = 1000)
+        private void BingWallpaper_LoadFinished()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "text/html;charset=UTF-8";
-            request.UserAgent = null;
-            request.Timeout = Timeout;
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-            Stream responseStream = response.GetResponseStream();
-            StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("utf-8"));
-            string result = streamReader.ReadToEnd();
-            streamReader.Close();
-            responseStream.Close();
-
-            return result;
         }
 
         protected override void OnClosed(EventArgs e)

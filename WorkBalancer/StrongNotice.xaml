@@ -23,7 +23,7 @@
                        Text="{StaticResource WindowTitle}"/>
             <Button x:Name="delayButton" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,5,10" 
                     Content="{StaticResource DelayOneMinute}" Click="DelayButton_Click"/>
-            <hc:ProgressButton x:Name="confirmButton" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,5,10"
+            <Button x:Name="confirmButton" Style="{StaticResource ButtonPrimary}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,5,10"
                                Content="{StaticResource ConfirmResult}" Click="ConfirmButton_Click"/>
         </Grid>
     </hc:SimplePanel>

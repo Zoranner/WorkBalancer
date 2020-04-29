@@ -14,16 +14,6 @@ namespace WorkBalancer
         public StrongNotice()
         {
             InitializeComponent();
-            Initialized += StrongNotice_Initialized;
-        }
-
-        private void StrongNotice_Initialized(object sender, System.EventArgs e)
-        {
-            for (int i = 0; i < 50; i++)
-            {
-                confirmButton.Progress = 0.1 * (i + 1);
-                Thread.Sleep(100);
-            }
         }
 
         private void StrongNotice_Loaded(object sender, RoutedEventArgs e)

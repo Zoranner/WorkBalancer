@@ -1,0 +1,4 @@
+D:\Personals\Desktop\csharp\WorkBalancer\SuperEvents\bin\Debug\SuperEvents.dll
+D:\Personals\Desktop\csharp\WorkBalancer\SuperEvents\bin\Debug\SuperEvents.pdb
+D:\Personals\Desktop\csharp\WorkBalancer\SuperEvents\obj\Debug\SuperEvents.dll
+D:\Personals\Desktop\csharp\WorkBalancer\SuperEvents\obj\Debug\SuperEvents.pdb

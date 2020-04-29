@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BingWallpaper.cs" />
     <Compile Include="DispatcherHelper.cs" />
     <Compile Include="StrongNotice.xaml.cs">
       <DependentUpon>StrongNotice.xaml</DependentUpon>
@@ -107,6 +108,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="BingXmlExample.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SuperEvents\SuperEvents.csproj">
+      <Project>{0B3995AE-9DCA-482F-B879-52A755C055A6}</Project>
+      <Name>SuperEvents</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
