@@ -34,8 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HandyControl, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HandyControl.2.4.0\lib\net45\HandyControl.dll</HintPath>
+    <Reference Include="HandyControl, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HandyControls.2.5.2.1\lib\net45\HandyControl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -60,8 +60,19 @@
     </ApplicationDefinition>
     <Compile Include="BingWallpaper.cs" />
     <Compile Include="DispatcherHelper.cs" />
+    <Compile Include="LocalConfigs.cs" />
+    <Compile Include="SettingPanel.cs" />
+    <Compile Include="SettingWindow.xaml.cs">
+      <DependentUpon>SettingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StrongNotice.xaml.cs">
       <DependentUpon>StrongNotice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AdvancedSetting.xaml.cs">
+      <DependentUpon>AdvancedSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BasicSetting.xaml.cs">
+      <DependentUpon>BasicSetting.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -77,9 +88,49 @@
     </Compile>
     <Page Include="Resources\Languages\zh-cn.xaml">
       <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Resources\Styles\Brushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\Effects.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\Geometries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\Sizes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingWindow.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StrongNotice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AdvancedSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\BasicSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\Basics\MasterGroupBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -98,16 +149,15 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\Fonts\fabric-icons.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="BingXmlExample.xml" />
     <Resource Include="Resources\Pictures\cherry-blossom.ico" />
     <Resource Include="Resources\Pictures\cherry-blossom.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="BingXmlExample.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SuperEvents\SuperEvents.csproj">
@@ -115,5 +165,16 @@
       <Name>SuperEvents</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Pictures\cloud.png" />
+    <Resource Include="Resources\Pictures\Flag\cn.png" />
+    <Resource Include="Resources\Pictures\Flag\en.png" />
+    <Resource Include="Resources\Pictures\Flag\fa.png" />
+    <Resource Include="Resources\Pictures\Flag\fr.png" />
+    <Resource Include="Resources\Pictures\Flag\ko-KR.png" />
+    <Resource Include="Resources\Pictures\Flag\ru.png" />
+    <Resource Include="Resources\Pictures\Flag\tr.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

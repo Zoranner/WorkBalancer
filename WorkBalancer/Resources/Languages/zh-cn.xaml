@@ -11,5 +11,23 @@
     <system:String x:Key="DelayThreeMinute">推迟三分钟</system:String>
     <system:String x:Key="DelayFiveMinute">推迟五分钟</system:String>
     <system:String x:Key="ConfirmResult">知道了</system:String>
-    
+
+    <system:String x:Key="SettingWindow">系统设置</system:String>
+    <system:String x:Key="BasicSetting">基础设置</system:String>
+    <system:String x:Key="AdvancedSetting">高级设置</system:String>
+    <system:String x:Key="AutoStartup">开机自启动</system:String>
+    <system:String x:Key="LimitWorkingHours">限定工作时间</system:String>
+    <system:String x:Key="RestCycle">休息周期</system:String>
+    <system:String x:Key="To">至</system:String>
+    <system:String x:Key="Each">每</system:String>
+    <system:String x:Key="Minutes">分钟</system:String>
+    <system:String x:Key="Rest">休息</system:String>
+    <system:String x:Key="UnlockPinCode">紧急解锁密码</system:String>
+    <system:String x:Key="InputAgain">请再次输入</system:String>
+    <system:String x:Key="DefaultPinCode">000000</system:String>
+    <system:String x:Key="UnlockTip">*双击空格键进行紧急解锁，默认密码：</system:String>
+    <system:String x:Key="Apply">应用</system:String>
+    <system:String x:Key="Confirm">确认</system:String>
+    <system:String x:Key="Cancel">取消</system:String>
+
 </ResourceDictionary>

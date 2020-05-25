@@ -41,10 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KimoEvent.cs" />
-    <Compile Include="KimoEventBinding.cs" />
-    <Compile Include="KimoEventLink.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SuperEvents.cs" />
+    <Compile Include="SuperEventsBinding.cs" />
+    <Compile Include="SuperEventsLink.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

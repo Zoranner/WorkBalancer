@@ -1,0 +1,69 @@
+﻿<Border x:Class="WorkBalancer.UserControls.BasicSetting"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WorkBalancer.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d">
+    <GroupBox Header="{StaticResource BasicSetting}" Style="{StaticResource MasterGroupBox}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="96"/>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Row="0" Grid.Column="0" Content="{StaticResource AutoStartup}" IsChecked="True" HorizontalAlignment="Left"/>
+            <CheckBox Grid.Row="2" Grid.Column="0" Content="{StaticResource LimitWorkingHours}" IsChecked="True" HorizontalAlignment="Left"/>
+            <Grid Grid.Row="2" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <hc:TimePicker Grid.Column="0" Text="09:00:00" Style="{StaticResource TimePickerPlus}">
+                    <hc:TimePicker.Clock>
+                        <hc:ListClock/>
+                    </hc:TimePicker.Clock>
+                </hc:TimePicker>
+                <TextBlock Grid.Column="2" Text="{StaticResource To}" VerticalAlignment="Center"/>
+                <hc:TimePicker Grid.Column="4" Text="17:00:00" Style="{StaticResource TimePickerPlus}">
+                    <hc:TimePicker.Clock>
+                        <hc:ListClock/>
+                    </hc:TimePicker.Clock>
+                </hc:TimePicker>
+            </Grid>
+            <CheckBox Grid.Row="4" Grid.Column="0" Content="{StaticResource RestCycle}" IsChecked="True" HorizontalAlignment="Left"/>
+            <Grid Grid.Row="4" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{StaticResource Each}" VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="2" SelectedIndex="0"/>
+                <TextBlock Grid.Column="4" Text="{StaticResource Minutes}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="6" Text="{StaticResource Rest}" VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="8" SelectedIndex="0"/>
+                <TextBlock Grid.Column="10" Text="{StaticResource Minutes}" VerticalAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </GroupBox>
+</Border>

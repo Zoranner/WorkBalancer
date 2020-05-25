@@ -6,6 +6,7 @@
 //============================================================
 
 using System;
+using System.Collections.Generic;
 
 namespace Zoranner.SuperEvents
 {
@@ -13,9 +14,9 @@ namespace Zoranner.SuperEvents
     public abstract class SuperEventBase<TDelegate> : ISuperEventLinkBase<TDelegate> where TDelegate : class
     {
         /// <inheritdoc />
-        ///     <summary>
-        ///     How many persistent listeners does this instance currently have?
-        ///     </summary>
+        /// <summary>
+        /// How many persistent listeners does this instance currently have?
+        /// </summary>
         public uint ListenerCount => _Count;
 
         /// <inheritdoc />
@@ -116,12 +117,9 @@ namespace Zoranner.SuperEvents
         /// <param name="allowDuplicates">If <c>false</c>, checks whether persistent listener is already present.</param>
         public ISuperEventBinding BindListener(TDelegate listener, bool allowDuplicates = false)
         {
-            if (AddListener(listener, allowDuplicates))
-            {
-                return new SuperEventBinding<TDelegate>(this, listener, allowDuplicates, true);
-            }
-
-            return null;
+            return AddListener(listener, allowDuplicates)
+                ? new SuperEventBinding<TDelegate>(this, listener, allowDuplicates, true)
+                : null;
         }
 
         /// <summary>
@@ -167,7 +165,7 @@ namespace Zoranner.SuperEvents
         /// <param name="listener">Listener.</param>
         public bool RemoveListener(TDelegate listener)
         {
-            bool result = false;
+            var result = false;
             for (uint i = 0; i < _Count; ++i)
             {
                 if (!_Listeners[i].Equals(listener))
@@ -192,7 +190,7 @@ namespace Zoranner.SuperEvents
         /// <param name="listener">Listener.</param>
         public bool RemoveOnce(TDelegate listener)
         {
-            bool result = false;
+            var result = false;
             for (uint i = 0; i < _OnceCount; ++i)
             {
                 if (!_ListenersOnce[i].Equals(listener))
@@ -229,14 +227,14 @@ namespace Zoranner.SuperEvents
                     _SuperEventDebugger.DebugRemListener (this, _listeners[i]);
                 }
 #endif
-                Array.Clear(_Listeners, 0, (int)_Cap);
+                Array.Clear(_Listeners, 0, (int) _Cap);
                 _Count = 0;
             }
 
             if (removeOneTimeListeners && _OnceCount > 0)
             {
                 // Count check because array lazily instantiated
-                Array.Clear(_ListenersOnce, 0, (int)_OnceCap);
+                Array.Clear(_ListenersOnce, 0, (int) _OnceCap);
                 _OnceCount = 0;
             }
         }
@@ -256,7 +254,7 @@ namespace Zoranner.SuperEvents
         protected uint RemoveAt(TDelegate[] arr, uint count, uint i)
         {
             --count;
-            for (uint j = i; j < count; ++j)
+            for (var j = i; j < count; ++j)
             {
                 arr[j] = arr[j + 1];
             }
@@ -278,10 +276,10 @@ namespace Zoranner.SuperEvents
             return false;
         }
 
-        private TDelegate[] Expand(TDelegate[] arr, uint cap, uint count)
+        private TDelegate[] Expand(IReadOnlyList<TDelegate> arr, uint cap, uint count)
         {
-            TDelegate[] newArr = new TDelegate[cap];
-            for (int i = 0; i < count; ++i)
+            var newArr = new TDelegate[cap];
+            for (var i = 0; i < count; ++i)
             {
                 newArr[i] = arr[i];
             }
@@ -323,7 +321,7 @@ namespace Zoranner.SuperEvents
             // Persistent listeners
             // Reversal allows self-removal during dispatch (doesn't0 skip next listener)
             // Reversal allows safe addition during dispatch (doesn't0 fire immediately)
-            for (uint i = _Count; i > 0; --i)
+            for (var i = _Count; i > 0; --i)
             {
                 if (i > _Count)
                 {
@@ -341,14 +339,14 @@ namespace Zoranner.SuperEvents
             }
 
             // One-time listeners - reversed for safe addition and auto-removal
-            for (uint i = _OnceCount; i > 0; --i)
+            for (var i = _OnceCount; i > 0; --i)
             {
                 if (_ListenersOnce[i - 1] == null)
                 {
                     continue;
                 }
 
-                Action listener = _ListenersOnce[i - 1];
+                var listener = _ListenersOnce[i - 1];
                 listener();
                 // Check for self-removal before auto-removing
                 if (_ListenersOnce[i - 1] == listener)
@@ -388,7 +386,7 @@ namespace Zoranner.SuperEvents
 
         public void Dispatch(T0 t0)
         {
-            for (uint i = _Count; i > 0; --i)
+            for (var i = _Count; i > 0; --i)
             {
                 if (i > _Count)
                 {
@@ -405,14 +403,14 @@ namespace Zoranner.SuperEvents
                 }
             }
 
-            for (uint i = _OnceCount; i > 0; --i)
+            for (var i = _OnceCount; i > 0; --i)
             {
                 if (_ListenersOnce[i - 1] == null)
                 {
                     continue;
                 }
 
-                Action<T0> l = _ListenersOnce[i - 1];
+                var l = _ListenersOnce[i - 1];
                 l(t0);
                 if (_ListenersOnce[i - 1] == l)
                 {
@@ -451,7 +449,7 @@ namespace Zoranner.SuperEvents
 
         public void Dispatch(T0 t0, T1 t1)
         {
-            for (uint i = _Count; i > 0; --i)
+            for (var i = _Count; i > 0; --i)
             {
                 if (i > _Count)
                 {
@@ -468,14 +466,14 @@ namespace Zoranner.SuperEvents
                 }
             }
 
-            for (uint i = _OnceCount; i > 0; --i)
+            for (var i = _OnceCount; i > 0; --i)
             {
                 if (_ListenersOnce[i - 1] == null)
                 {
                     continue;
                 }
 
-                Action<T0, T1> l = _ListenersOnce[i - 1];
+                var l = _ListenersOnce[i - 1];
                 l(t0, t1);
                 if (_ListenersOnce[i - 1] == l)
                 {
@@ -514,7 +512,7 @@ namespace Zoranner.SuperEvents
 
         public void Dispatch(T0 t0, T1 t1, T2 t2)
         {
-            for (uint i = _Count; i > 0; --i)
+            for (var i = _Count; i > 0; --i)
             {
                 if (i > _Count)
                 {
@@ -531,14 +529,14 @@ namespace Zoranner.SuperEvents
                 }
             }
 
-            for (uint i = _OnceCount; i > 0; --i)
+            for (var i = _OnceCount; i > 0; --i)
             {
                 if (_ListenersOnce[i - 1] == null)
                 {
                     continue;
                 }
 
-                Action<T0, T1, T2> l = _ListenersOnce[i - 1];
+                var l = _ListenersOnce[i - 1];
                 l(t0, t1, t2);
                 if (_ListenersOnce[i - 1] == l)
                 {
@@ -577,7 +575,7 @@ namespace Zoranner.SuperEvents
 
         public void Dispatch(T0 t0, T1 u, T2 v, T3 t3)
         {
-            for (uint i = _Count; i > 0; --i)
+            for (var i = _Count; i > 0; --i)
             {
                 if (i > _Count)
                 {
@@ -594,14 +592,14 @@ namespace Zoranner.SuperEvents
                 }
             }
 
-            for (uint i = _OnceCount; i > 0; --i)
+            for (var i = _OnceCount; i > 0; --i)
             {
                 if (_ListenersOnce[i - 1] == null)
                 {
                     continue;
                 }
 
-                Action<T0, T1, T2, T3> l = _ListenersOnce[i - 1];
+                var l = _ListenersOnce[i - 1];
                 l(t0, u, v, t3);
                 if (_ListenersOnce[i - 1] == l)
                 {

@@ -14,6 +14,7 @@ namespace WorkBalancer
             try { Dispatcher.PushFrame(frame); }
             catch (InvalidOperationException) { }
         }
+
         private static object ExitFrames(object frame)
         {
             ((DispatcherFrame)frame).Continue = false;

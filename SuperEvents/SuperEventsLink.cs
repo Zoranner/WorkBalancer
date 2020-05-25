@@ -81,19 +81,24 @@ namespace Zoranner.SuperEvents
     }
 
     public interface ISuperEventLink : ISuperEventLinkBase<Action>
-    { }
+    {
+    }
 
     public interface ISuperEventLink<out T0> : ISuperEventLinkBase<Action<T0>>
-    { }
+    {
+    }
 
     public interface ISuperEventLink<out T0, out T1> : ISuperEventLinkBase<Action<T0, T1>>
-    { }
+    {
+    }
 
     public interface ISuperEventLink<out T0, out T1, out T2> : ISuperEventLinkBase<Action<T0, T1, T2>>
-    { }
+    {
+    }
 
     public interface ISuperEventLink<out T0, out T1, out T2, out T3> : ISuperEventLinkBase<Action<T0, T1, T2, T3>>
-    { }
+    {
+    }
 
     #endregion
 
@@ -101,12 +106,13 @@ namespace Zoranner.SuperEvents
 
     public abstract class SuperEventLinkBase<TDelegate> : ISuperEventLinkBase<TDelegate> where TDelegate : class
     {
-        protected SuperEventBase<TDelegate> _SuperEvent;
+        private readonly SuperEventBase<TDelegate> _SuperEvent;
 
         #region Constructors
 
         private SuperEventLinkBase()
-        { } // Private empty constructor to force use of params
+        {
+        } // Private empty constructor to force use of params
 
         protected SuperEventLinkBase(SuperEventBase<TDelegate> relay)
         {
@@ -122,11 +128,11 @@ namespace Zoranner.SuperEvents
         public uint OneTimeListenersCount => _SuperEvent.OneTimeListenersCount;
 
         /// <inheritdoc>
-        ///     <summary>
-        ///     Is this delegate already a persistent listener?
-        ///     Does NOT query one-time listeners.
-        ///     </summary>
-        ///     <param name="listener">Listener.</param>
+        /// <summary>
+        /// Is this delegate already a persistent listener?
+        /// Does NOT query one-time listeners.
+        /// </summary>
+        /// <param name="listener">Listener.</param>
         /// </inheritdoc>
         public bool Contains(TDelegate listener)
         {
@@ -134,9 +140,9 @@ namespace Zoranner.SuperEvents
         }
 
         /// <inheritdoc>
-        ///     <summary>Adds a persistent listener.</summary>
-        ///     <param name="listener">Listener.</param>
-        ///     <param name="allowDuplicates">If <c>false</c>, checks whether persistent listener is already present.</param>
+        /// <summary>Adds a persistent listener.</summary>
+        /// <param name="listener">Listener.</param>
+        /// <param name="allowDuplicates">If <c>false</c>, checks whether persistent listener is already present.</param>
         /// </inheritdoc>
         public bool AddListener(TDelegate listener, bool allowDuplicates = false)
         {
@@ -144,13 +150,13 @@ namespace Zoranner.SuperEvents
         }
 
         /// <inheritdoc>
-        ///     <summary>
-        ///     Adds listener and creates a SuperEventBinding between the listener and the SuperEvent.
-        ///     The SuperEventBinding can be used to enable/disable the listener.
-        ///     </summary>
-        ///     <returns>A new SuperEventBinding instance if successful, <c>null</c> otherwise.</returns>
-        ///     <param name="listener">Listener.</param>
-        ///     <param name="allowDuplicates">If <c>false</c>, checks whether persistent listener is already present.</param>
+        /// <summary>
+        /// Adds listener and creates a SuperEventBinding between the listener and the SuperEvent.
+        /// The SuperEventBinding can be used to enable/disable the listener.
+        /// </summary>
+        /// <returns>A new SuperEventBinding instance if successful, <c>null</c> otherwise.</returns>
+        /// <param name="listener">Listener.</param>
+        /// <param name="allowDuplicates">If <c>false</c>, checks whether persistent listener is already present.</param>
         /// </inheritdoc>
         public ISuperEventBinding BindListener(TDelegate listener, bool allowDuplicates = false)
         {
@@ -172,9 +178,9 @@ namespace Zoranner.SuperEvents
         }
 
         /// <inheritdoc>
-        ///     <summary>Removes a persistent listener, if present.</summary>
-        ///     <returns><c>true</c>, if listener was removed, <c>false</c> otherwise.</returns>
-        ///     <param name="listener">Listener.</param>
+        /// <summary>Removes a persistent listener, if present.</summary>
+        /// <returns><c>true</c>, if listener was removed, <c>false</c> otherwise.</returns>
+        /// <param name="listener">Listener.</param>
         /// </inheritdoc>
         public bool RemoveListener(TDelegate listener)
         {
@@ -182,9 +188,9 @@ namespace Zoranner.SuperEvents
         }
 
         /// <inheritdoc>
-        ///     <summary>Removes a listener added with AddOnce, if present.</summary>
-        ///     <returns><c>true</c>, if listener was removed, <c>false</c> otherwise.</returns>
-        ///     <param name="listener">Listener.</param>
+        /// <summary>Removes a listener added with AddOnce, if present.</summary>
+        /// <returns><c>true</c>, if listener was removed, <c>false</c> otherwise.</returns>
+        /// <param name="listener">Listener.</param>
         /// </inheritdoc>
         public bool RemoveOnce(TDelegate listener)
         {
@@ -192,9 +198,9 @@ namespace Zoranner.SuperEvents
         }
 
         /// <inheritdoc>
-        ///     <summary>Removes all listeners.</summary>
-        ///     <param name="removePersistentListeners">If set to <c>true</c> remove persistent listeners.</param>
-        ///     <param name="removeOneTimeListeners">If set to <c>true</c>, also remove one-time listeners.</param>
+        /// <summary>Removes all listeners.</summary>
+        /// <param name="removePersistentListeners">If set to <c>true</c> remove persistent listeners.</param>
+        /// <param name="removeOneTimeListeners">If set to <c>true</c>, also remove one-time listeners.</param>
         /// </inheritdoc>
         public void RemoveAll(bool removePersistentListeners = true, bool removeOneTimeListeners = true)
         {
@@ -207,31 +213,37 @@ namespace Zoranner.SuperEvents
     public class SuperEventLink : SuperEventLinkBase<Action>, ISuperEventLink
     {
         public SuperEventLink(SuperEventBase<Action> relay) : base(relay)
-        { }
+        {
+        }
     }
 
     public class SuperEventLink<T0> : SuperEventLinkBase<Action<T0>>, ISuperEventLink<T0>
     {
         public SuperEventLink(SuperEventBase<Action<T0>> relay) : base(relay)
-        { }
+        {
+        }
     }
 
     public class SuperEventLink<T0, T1> : SuperEventLinkBase<Action<T0, T1>>, ISuperEventLink<T0, T1>
     {
         public SuperEventLink(SuperEventBase<Action<T0, T1>> relay) : base(relay)
-        { }
+        {
+        }
     }
 
     public class SuperEventLink<T0, T1, T2> : SuperEventLinkBase<Action<T0, T1, T2>>, ISuperEventLink<T0, T1, T2>
     {
         public SuperEventLink(SuperEventBase<Action<T0, T1, T2>> relay) : base(relay)
-        { }
+        {
+        }
     }
 
-    public class SuperEventLink<T0, T1, T2, T3> : SuperEventLinkBase<Action<T0, T1, T2, T3>>, ISuperEventLink<T0, T1, T2, T3>
+    public class SuperEventLink<T0, T1, T2, T3> : SuperEventLinkBase<Action<T0, T1, T2, T3>>,
+        ISuperEventLink<T0, T1, T2, T3>
     {
         public SuperEventLink(SuperEventBase<Action<T0, T1, T2, T3>> relay) : base(relay)
-        { }
+        {
+        }
     }
 
     #endregion

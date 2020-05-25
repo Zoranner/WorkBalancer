@@ -9,6 +9,7 @@
 namespace Zoranner.SuperEvents
 {
     #region Interface
+
     public interface ISuperEventBinding
     {
         /// <summary>
@@ -39,14 +40,15 @@ namespace Zoranner.SuperEvents
 
     public class SuperEventBinding<TDelegate> : ISuperEventBinding where TDelegate : class
     {
-        protected ISuperEventLinkBase<TDelegate> SuperEvent { get; private set; }
-        protected TDelegate Listener { get; private set; }
+        private ISuperEventLinkBase<TDelegate> SuperEvent { get; }
+        private TDelegate Listener { get; }
 
         #region Constructors
 
+        // Private empty constructor to force use of params
         private SuperEventBinding()
         {
-        } // Private empty constructor to force use of params
+        }
 
         public SuperEventBinding(ISuperEventLinkBase<TDelegate> relay, TDelegate listener, bool allowDuplicates,
             bool isListening) : this()
@@ -62,34 +64,31 @@ namespace Zoranner.SuperEvents
         #region ISuperEventBinding implementation
 
         /// <inheritdoc>
-        ///     <summary>
-        ///     Is the listener currently subscribed to the SuperEvent?
-        ///     </summary>
+        /// <summary>
+        /// Is the listener currently subscribed to the SuperEvent?
+        /// </summary>
         /// </inheritdoc>
         public bool Enabled { get; private set; }
 
         /// <inheritdoc>
-        ///     <summary>
-        ///     Should enabling the binding add the listener to the SuperEvent if already added elsewhere?
-        ///     </summary>
+        /// <summary>
+        /// Should enabling the binding add the listener to the SuperEvent if already added elsewhere?
+        /// </summary>
         /// </inheritdoc>
         public bool AllowDuplicates { get; set; }
 
         /// <inheritdoc>
-        ///     <summary>
-        ///     How many persistent listeners does the bound SuperEvent currently have?
-        ///     </summary>
+        /// <summary>
+        /// How many persistent listeners does the bound SuperEvent currently have?
+        /// </summary>
         /// </inheritdoc>
-        public uint ListenerCount
-        {
-            get { return SuperEvent.ListenerCount; }
-        }
+        public uint ListenerCount => SuperEvent.ListenerCount;
 
         /// <inheritdoc>
-        ///     <summary>
-        ///     Enable or disable the listener on the bound SuperEvent.
-        ///     </summary>
-        ///     <returns><c>True</c> if listener was enabled/disabled successfully, <c>false</c> otherwise.true</returns>
+        /// <summary>
+        /// Enable or disable the listener on the bound SuperEvent.
+        /// </summary>
+        /// <returns><c>True</c> if listener was enabled/disabled successfully, <c>false</c> otherwise.true</returns>
         /// </inheritdoc>
         public bool Enable(bool enable)
         {

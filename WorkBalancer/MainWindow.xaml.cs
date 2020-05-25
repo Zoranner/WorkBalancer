@@ -12,11 +12,11 @@ namespace WorkBalancer
     /// </summary>
     public partial class MainWindow
     {
-        private Timer _RestTimer;
-        private Timer _WorkTimer;
-        private StrongNotice _StrongNotice;
         private BingWallpaper _BingWallpaper;
-        public delegate void TimerDispatcherDelegate(bool state);
+        private Timer _RestTimer;
+        private StrongNotice _StrongNotice;
+        private Timer _WorkTimer;
+        private SettingWindow _SettingWindow;
 
         public MainWindow()
         {
@@ -29,8 +29,8 @@ namespace WorkBalancer
             _WorkTimer = new Timer(5000);
             _StrongNotice = new StrongNotice();
             _BingWallpaper = new BingWallpaper();
-            _RestTimer.Elapsed += new ElapsedEventHandler(RestTimer_Elapsed);
-            _WorkTimer.Elapsed += new ElapsedEventHandler(WorkTimer_Elapsed);
+            _RestTimer.Elapsed += RestTimer_Elapsed;
+            _WorkTimer.Elapsed += WorkTimer_Elapsed;
             _WorkTimer.Enabled = true;
             WindowState = WindowState.Minimized;
         }
@@ -38,7 +38,11 @@ namespace WorkBalancer
         private void PopupButton_Clicked(object sender, RoutedEventArgs e)
         {
             Growl.Error("ErrorMessage", "MainMessage");
-            //Notification.Show(_StrongNotice, ShowAnimation.HorizontalMove, true);
+            if (_SettingWindow == null)
+            {
+                _SettingWindow = new SettingWindow();
+            }
+            _SettingWindow.Show();
         }
 
         private void MainWindow_StateChanged(object sender, EventArgs e)
@@ -53,12 +57,18 @@ namespace WorkBalancer
 
         private void WorkTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Dispatcher.Invoke(DispatcherPriority.Normal, new TimerDispatcherDelegate(BalanceSwitch), true);
+            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                BalanceSwitch(true);
+            }));
         }
 
         private void RestTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Dispatcher.Invoke(DispatcherPriority.Normal, new TimerDispatcherDelegate(BalanceSwitch), false);
+            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                BalanceSwitch(false);
+            }));
         }
 
         private void BalanceSwitch(bool state)
@@ -84,7 +94,7 @@ namespace WorkBalancer
             {
                 imageBlock.Source = _BingWallpaper.LoadImage();
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
                 Growl.Error(exception.Message, "MainMessage");
@@ -93,12 +103,10 @@ namespace WorkBalancer
 
         private void BingWallpaper_LoadStarted()
         {
-
         }
 
         private void BingWallpaper_LoadFinished()
         {
-
         }
 
         protected override void OnClosed(EventArgs e)

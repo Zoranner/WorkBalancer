@@ -1,0 +1,38 @@
+﻿<Border x:Class="WorkBalancer.UserControls.AdvancedSetting"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WorkBalancer.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d">
+    <GroupBox Header="{StaticResource AdvancedSetting}" Style="{StaticResource MasterGroupBox}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="96"/>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <!--<CheckBox Grid.Row="0" Grid.Column="0" Content="{StaticResource UnlockPassword}" HorizontalAlignment="Left"/>-->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{StaticResource UnlockPinCode}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <hc:PinBox x:Name="firstPinBox" Grid.Row="0" Grid.Column="2" Length="6" Password="{StaticResource DefaultPinCode}" PasswordChar="❤"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="{StaticResource InputAgain}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <hc:PinBox x:Name="againPinBox" Grid.Row="2" Grid.Column="2" Length="6" Password="{StaticResource DefaultPinCode}" PasswordChar="❤"/>
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,8,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{StaticResource UnlockTip}" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource TextBlockDefaultThiLight}"/>
+                <TextBlock Grid.Column="1" Text="{StaticResource DefaultPinCode}" FontSize="10" VerticalAlignment="Center" Style="{StaticResource TextBlockDefaultThiLight}"/>
+            </Grid>
+        </Grid>
+    </GroupBox>
+</Border>
